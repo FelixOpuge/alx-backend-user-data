@@ -25,3 +25,17 @@ if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
     app.run(host=host, port=port)
+
+@app.errorhandler(401)
+def unauthorized(error: Exception) -> Tuple[jsonify, int]:
+    """Error handler for unauthorized requests.
+
+    Args:
+        error (Exception): The error raised.
+
+    Returns:
+        Tuple[jsonify, int]: JSON response with the error message and a 401
+        status code.
+    """
+    return jsonify({"error": "Unauthorized"}), 401
+
